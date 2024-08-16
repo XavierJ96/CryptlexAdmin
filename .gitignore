@@ -1,0 +1,66 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Aa][Rr][Mm]32/
+[Aa][Rr][Mm]64/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio files
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet packages
+*.nupkg
+*.snupkg
+*.nupkg.metadata
+*.nuget
+packages/
+NuGet.config
+.nuget/
+
+# ReSharper
+*.DotSettings.user
+*.DotSettings
+
+# Auto-generated files
+*.csproj.user
+*.csproj.dotsettings
+
+# Logs
+*.log
+
+# Other
+*.dmg
+*.tmp
+*.bak
+*.swp
+*.swo
+*.sublime-workspace
+
+# OS-specific
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
