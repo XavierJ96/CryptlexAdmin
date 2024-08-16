@@ -11,7 +11,7 @@ namespace CryplexAdmin.Services
         private const string BaseAddress = "https://api.cryptlex.com/v3/";
         
         //Bearer Token
-        private const string BearerToken = "";
+        private const string BearerToken = "ENTER TOKEN";
 
         public HttpClientService()
         {
