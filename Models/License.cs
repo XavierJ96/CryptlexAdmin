@@ -31,7 +31,7 @@ namespace CryplexAdmin.Models
         public bool? RequireAuthentication { get; set; } = null;
         public bool? DisableGeoLocation { get; set; } = null;
         public string Notes { get; set; } = null;
-        public string ProductId { get; set; } = null;
+        public string ProductId { get; set; }
         public object ProductVersionId { get; set; } = null;
         public object MaintenancePolicyId { get; set; } = null;
         public object MaintenanceExpiresAt { get; set; } = null;
