@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using System.Text;
+using System.ComponentModel;
 
 namespace CryplexAdmin.Services
 {
@@ -36,11 +37,28 @@ namespace CryplexAdmin.Services
             }
         }
 
-        public async Task DeleteProductAsync(string licenseId)
+        public async Task<string> GetProductDataAsync(string productId)
         {
             try
             {
-                HttpResponseMessage response = await _httpClientService.DeleteAsync($"products/{licenseId}");
+                HttpResponseMessage response = await _httpClientService.GetAsync($"products/{productId}/product.dat");
+                response.EnsureSuccessStatusCode();
+                string productData = await response.Content.ReadAsStringAsync();
+
+                return productData;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null; 
+            }
+        }
+
+        public async Task DeleteProductAsync(string productId)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClientService.DeleteAsync($"products/{productId}");
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
