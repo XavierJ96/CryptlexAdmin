@@ -18,6 +18,10 @@
 
                 <TextBlock Text="Description" Margin="5"/>
                 <TextBox x:Name="DescriptionTextBox" Margin="5"/>
+                
+                <TextBlock Text="Select License Template:" Margin="0,0,0,5"/>
+                <ComboBox x:Name="licenseTemplateComboBox" SelectionChanged="licenseTemplateComboBox_SelectionChanged" DisplayMemberPath="Type">
+                </ComboBox>
             </StackPanel>
 
             <StackPanel x:Name="LicenseFields" Visibility="Collapsed">

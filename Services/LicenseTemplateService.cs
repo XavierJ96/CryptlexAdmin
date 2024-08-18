@@ -21,7 +21,7 @@ namespace CryplexAdmin.Services
         {
             try
             {
-                HttpResponseMessage response = await _httpClientService.GetAsync("products");
+                HttpResponseMessage response = await _httpClientService.GetAsync("license-templates");
                 response.EnsureSuccessStatusCode();
                 string content = await response.Content.ReadAsStringAsync();
 

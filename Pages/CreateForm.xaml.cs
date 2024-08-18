@@ -14,6 +14,7 @@ namespace CryplexAdmin.Pages
     {
         private readonly ProductService _productService;
         private readonly LicenseService _licenseService;
+        private readonly LicenseTemplateService _licenseTemplateService;
         public string Context { get; set; }
 
         public CreateForm(string context)
@@ -21,12 +22,33 @@ namespace CryplexAdmin.Pages
             InitializeComponent();
             _productService = new ProductService(new HttpClientService());
             _licenseService = new LicenseService(new HttpClientService());
+            _licenseTemplateService = new LicenseTemplateService(new HttpClientService());
+
             Context = context;
             InitializeForm(context);
 
             if (context == "License")
             {
                 _ = PopulateLicenseComboBoxAsync();
+            }
+            else if (context == "Product")
+            {
+                LoadLicenseTemplatesAsync();
+            }
+
+        }
+
+        private async void LoadLicenseTemplatesAsync()
+        {
+            try
+            {
+                var licenseTemplates = await _licenseTemplateService.GetAllLicenseTemplatesAsync();
+                licenseTemplateComboBox.ItemsSource = licenseTemplates;
+                licenseTemplateComboBox.DisplayMemberPath = "Type";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading license templates: {ex.Message}");
             }
         }
 
@@ -59,58 +81,59 @@ namespace CryplexAdmin.Pages
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             var submitButton = sender as Button;
-            submitButton.IsEnabled = false;
+            submitButton.IsEnabled = false; 
 
-            if (Context == "Product")
+            try
             {
-                var product = new ProductRequest
+                if (Context == "Product")
                 {
-                    Name = NameTextBox.Text,
-                    DisplayName = DisplayNameTextBox.Text,
-                    Description = DescriptionTextBox.Text,
-                    LicenseTemplateId = "d7456051-923c-46c2-8dfd-e7f65de3fc9b",
-                };
+                    if (licenseTemplateComboBox.SelectedItem is LicenseTemplate selectedTemplate)
+                    {
+                        var product = new ProductRequest
+                        {
+                            Name = NameTextBox.Text,
+                            DisplayName = DisplayNameTextBox.Text,
+                            Description = DescriptionTextBox.Text,
+                            LicenseTemplateId = selectedTemplate.Id, 
+                        };
 
-                try
-                {
-                    await _productService.CreateProductAsync(product);
-                    var productPage = new ProductsPage();
-                    NavigationService.Navigate(productPage);
+                        await _productService.CreateProductAsync(product);
+                        var productPage = new ProductsPage();
+                        NavigationService.Navigate(productPage);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select a license template.");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to create product: {ex.Message}");
-                }
-                finally
-                {
-                    submitButton.IsEnabled = true;
-                }
-            }
-            else if (Context == "License")
-            {
-                try
+                else if (Context == "License")
                 {
                     var selectedProductId = LicenseComboBox.SelectedValue as string;
                     if (string.IsNullOrEmpty(selectedProductId))
                     {
                         MessageBox.Show("Please select a product.");
-                        return;
+                        return; 
                     }
 
                     await _licenseService.CreateLicenseAsync(selectedProductId);
-
                     var licensePage = new LicencesPage();
                     NavigationService.Navigate(licensePage);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to create license: {ex.Message}");
-                }
-                finally
-                {
-                    submitButton.IsEnabled = true;
-                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Operation failed: {ex.Message}");
+            }
+            finally
+            {
+                submitButton.IsEnabled = true; 
+            }
+        }
+
+
+        private void licenseTemplateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
     }
 }
