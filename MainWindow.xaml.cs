@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using CryplexAdmin.Pages;
 using System.Windows;
-using CryplexAdmin.Pages;
 
 namespace CryplexAdmin
 {
