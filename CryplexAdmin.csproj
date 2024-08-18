@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\LicenseTemplate.cs" />
     <Compile Include="Pages\ActivationForm.xaml.cs">
       <DependentUpon>ActivationForm.xaml</DependentUpon>
     </Compile>
@@ -81,6 +82,7 @@
     </Compile>
     <Compile Include="Services\HttpClientService.cs" />
     <Compile Include="Services\LicenceService.cs" />
+    <Compile Include="Services\LicenseTemplateService.cs" />
     <Compile Include="Services\ProductSevice.cs" />
     <Page Include="Pages\ActivationForm.xaml">
       <SubType>Designer</SubType>
